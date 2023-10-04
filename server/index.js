@@ -8,8 +8,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const wares = require('./routes/api/wares');
-app.use('/api/wares', wares);
+const products = require('./routes/api/products');
+app.use('/api/products', products);
 
 const port = process.env.PORT || 5000;
 
