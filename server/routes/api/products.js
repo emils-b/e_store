@@ -43,7 +43,9 @@ router.post("/product", async (req, res) => {
 
     const sql = "UPDATE products SET amount = ? WHERE sku = ?";
 
-    const productData = results.data.find((product) => product?.sku === sku);
+    const productData = results.data.results.find(
+      (product) => product?.sku === sku
+    );
     if (productData) {
       connection.query(
         sql,
@@ -68,13 +70,15 @@ router.post("/product", async (req, res) => {
 router.delete("/products", async (req, res) => {
   try {
     const sql = "TRUNCATE TABLE Products;";
-    if (error) {
-      res.send({ success: false, message: "Could not delete all products" });
+    connection.query(sql, function (error, results) {
+      if (error) {
+        res.send({ success: false, message: "Could not delete all products" });
 
-      return;
-    }
+        return;
+      }
 
-    res.send({ success: true });
+      res.send({ success: true });
+    });
   } catch (error) {
     res.send({ success: false, message: "Could not delete all products" });
   }
@@ -94,7 +98,7 @@ router.post("/products", async (req, res) => {
       }
     });
 
-    results.data.forEach((product) => {
+    results.data.results.forEach((product) => {
       const sql =
         "INSERT INTO products (description, name, price, amount, sku) VALUES (?, ?, ?, ?, ?)";
       const sqlParams = [
@@ -153,23 +157,5 @@ router.post("/buy", async (req, res) => {
     res.send({ success: false });
   }
 });
-
-// TODO: clean up
-// const t = await getId();
-// async function getId() {
-//   return new Promise(function(resolve, reject) {
-//     sql = "SELECT * from users";
-//     const results = connection.query(
-//       sql,
-//       function (error, results) {
-//         if (error) {
-//           reject(error);
-//         } else {
-//           resolve(results);
-//         }
-//       }
-//     );
-//   });
-// }
 
 module.exports = router;
