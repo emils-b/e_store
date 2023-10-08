@@ -2,7 +2,8 @@ const express = require("express");
 const axios = require("axios");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
-dotenv.config();
+const path = require("path");
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 var connection = mysql.createConnection({
   host: process.env.DB_HOST,
