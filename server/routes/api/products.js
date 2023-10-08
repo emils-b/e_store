@@ -12,6 +12,8 @@ var connection = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
+console.log("Connection state: " + connection.state);
+
 const router = express.Router();
 const warehouseUrl = process.env.WAREHOUSE_API_URL;
 
