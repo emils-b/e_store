@@ -21,6 +21,8 @@ router.get("/all", async (req, res) => {
   try {
     const sql = "SELECT * from products";
     connection.query(sql, function (error, results) {
+      console.log("DB connection state: " + connection.state);
+
       if (error) {
         res.send({ success: false });
 
@@ -37,6 +39,8 @@ router.get("/all", async (req, res) => {
 //get one specific product from warehouse system by sku to check available amount
 router.post("/product", async (req, res) => {
   try {
+    console.log("Fetching product from warehouse system.");
+
     const sku = req.query.sku;
     const results = await axios.get(warehouseUrl + "/product", {
       params: { sku },
@@ -88,6 +92,8 @@ router.delete("/products", async (req, res) => {
 //get all products from warehouse
 router.post("/products", async (req, res) => {
   try {
+    console.log("Fetching all products from warehouse system.");
+
     const results = await axios.get(warehouseUrl + "/products");
 
     const sql = "TRUNCATE TABLE Products;";
