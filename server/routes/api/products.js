@@ -74,7 +74,7 @@ router.post("/product", async (req, res) => {
 //delete all products from store DB
 router.delete("/products", async (req, res) => {
   try {
-    const sql = "TRUNCATE TABLE Products;";
+    const sql = "TRUNCATE TABLE products;";
     connection.query(sql, function (error, results) {
       if (error) {
         res.send({ success: false, message: "Could not delete all products" });
