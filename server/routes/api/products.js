@@ -96,7 +96,7 @@ router.post("/products", async (req, res) => {
 
     const results = await axios.get(warehouseUrl + "/products");
 
-    const sql = "TRUNCATE TABLE Products;";
+    const sql = "TRUNCATE TABLE products;";
     connection.query(sql, function (error, results) {
       if (error) {
         res.send({ success: false, message: "Could not update all products" });
